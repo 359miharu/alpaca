@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 use strict;
 use warnings;
 use Data::Dumper;
@@ -31,7 +31,9 @@ sub check_items_for_all {
 
 	for my $req_item (@required) { # foreachの意
 	    push @missing, $req_item unless (grep $req_item eq $_, @items); # $_ = red-shirt,hat…
-	    # 括弧の中は0か１の条件。0だったときの$req_itemを@missingに追加する
+	    # grep  = @itemの中から真ん中の条件に合うものがあったら新しい配列にためる
+            # 括弧の中は条件。grepの結果として返る配列の中が1個以上あるとき1、1個もない時0
+	    # unlessのため、0の時（必須アイテムを持ってないとき）$req_itemを@missingに追加する
 	}
 	print "$whoは@missingを忘れています。\n" if (@missing);
     }
