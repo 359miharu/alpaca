@@ -39,6 +39,7 @@ while (<DATA>) {
     $total_bytes{$source}{$destination} += $bytes;
 }
 
+#下のfor文の$sourceは世に出てないためサブルーチンで参照できない。呼び出すときに直接渡す。
 for my $source (sort keys %total_bytes) {
     for my $destination (sort { &by_bytes($source) } keys %{$total_bytes{$source} }) {
         print "$source => $destination:",
@@ -49,6 +50,7 @@ for my $source (sort keys %total_bytes) {
 
 
 sub by_bytes {
+    # $sourceは配列で受け取ったためshiftする
     my $s = shift;
     $total_bytes{$s}{$b} <=> $total_bytes{$s}{$a}
 }
